@@ -76,11 +76,11 @@ export function runChecks(cwd = process.cwd(), env = process.env) {
 
   let envText = "";
   try { envText = fs.readFileSync(path.join(cwd, ".env"), "utf8"); } catch {}
-  const keys = readEnvKeys(["FAL_KEY", "RESEND_API_KEY"], envText, env);
+  const keys = readEnvKeys(["KIE_API_KEY", "RESEND_API_KEY"], envText, env);
   res.keys = {
-    ok: keys.FAL_KEY,
-    detail: `FAL_KEY ${keys.FAL_KEY ? "set" : "missing"}, RESEND_API_KEY ${keys.RESEND_API_KEY ? "set" : "missing (needed at deploy)"}`,
-    fix: "Add export FAL_KEY=... to your shell profile (~/.zshrc), open a new terminal, restart claude. The fal MCP reads it at startup.",
+    ok: keys.KIE_API_KEY,
+    detail: `KIE_API_KEY ${keys.KIE_API_KEY ? "set" : "missing"}, RESEND_API_KEY ${keys.RESEND_API_KEY ? "set" : "missing (needed at deploy)"}`,
+    fix: "Get a key at https://kie.ai. Mac/Linux: add export KIE_API_KEY=... to ~/.zshrc. Windows PowerShell: setx KIE_API_KEY \"your-key\". Then open a new terminal and restart claude.",
     needed_for: "build",
   };
 

@@ -1,6 +1,6 @@
 ---
 name: setup-check
-description: Use first, before building any site with the 99-website pack, or when any 99-website step fails with a connection or login error. Checks Node, Cloudflare login, Lighthouse, Chrome, keys, the design skills, and the DataWise, DataForSEO, fal and treg connections, then picks the keyword data source (DataWise, DataForSEO or manual).
+description: Use first, before building any site with the 99-website pack, or when any 99-website step fails with a connection or login error. Checks Node, Cloudflare login, Lighthouse, Chrome, keys, the design skills, and the DataWise, DataForSEO, kie.ai key and treg connections, then picks the keyword data source (DataWise, DataForSEO or manual).
 ---
 
 # Setup check
@@ -24,7 +24,7 @@ One cheap call each, in this order. MCP tool names differ by install (for exampl
    - No DataWise tool exists: `not_connected`.
    - Both a claude.ai DataWise connector and a project/plugin DataWise server are present: still `ok`, plus warning "DataWise is connected twice. Remove one so the tools do not show up under two names."
 2. **DataForSEO** (only if DataWise is not `ok`). Call the tool whose name contains `kw_data_google_ads_search_volume` with `keywords: ["plumber"]`. `ok`, `not_connected`, or `error` with the message.
-3. **fal.** Call the fal tool whose name contains `get_pricing` for `fal-ai/flux-2-pro` (if there is no pricing tool, call the one containing `search_models` with query `flux 2 pro`). `ok` with the price if returned, else `not_connected`.
+3. **kie.ai.** There is no MCP server for it. Run `node "<base>/../../scripts/doctor.mjs"` and use its `keys` row: `ok` if `KIE_API_KEY` is set, else `not_connected`. Do not generate a test image (it costs credits).
 4. **treg.** Call `catalog_search` with query `submit sitemap to google search console`. `ok` if a result looks like `webmasters-sitemaps-submit`. Do not call the endpoint itself.
 
 ## Step 3: Pick the keyword data path
@@ -45,7 +45,7 @@ Create the `.99-website/` folder in the current working folder if needed and wri
       "connections": {
         "datawise":   { "status": "...", "detail": "..." },
         "dataforseo": { "status": "...", "detail": "..." },
-        "fal":        { "status": "...", "detail": "..." },
+        "kie":        { "status": "...", "detail": "..." },
         "treg":       { "status": "...", "detail": "..." }
       },
       "local": <the doctor JSON>
@@ -60,7 +60,7 @@ A table with columns Check, Status (OK, MISSING, WARN), Needed for (now, build, 
 | DataWise not connected (Claude Code) | `claude mcp add --transport http --scope user datawise https://mcp.datawiseseo.com/mcp`, restart `claude`, type `/mcp`, pick `datawise`, Authenticate, log in, Allow |
 | DataWise not connected (Claude desktop) | Settings > Connectors > Add custom connector, URL `https://mcp.datawiseseo.com/mcp`, Connect |
 | DataForSEO not connected | Sign up at https://app.dataforseo.com/?aff=182182, then `claude mcp add --transport http --scope user dataforseo https://mcp.dataforseo.com/mcp` and Authenticate in `/mcp` |
-| fal not connected | Put `export FAL_KEY=...` in `~/.zshrc`, open a new terminal, restart `claude` (this plugin already declares the fal server) |
+| kie.ai key missing | Get a key at https://kie.ai. Mac/Linux: put `export KIE_API_KEY=...` in `~/.zshrc`. Windows PowerShell: `setx KIE_API_KEY "your-key"`. Open a new terminal and restart `claude` |
 | treg not connected | Only needed at the deploy step. Leave it for now |
 | Anything from the doctor JSON | Use its `fix` text |
 

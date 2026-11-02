@@ -3,11 +3,6 @@
     "datawise": {
       "type": "http",
       "url": "https://mcp.datawiseseo.com/mcp"
-    },
-    "fal": {
-      "type": "http",
-      "url": "https://mcp.fal.ai/mcp",
-      "headers": { "Authorization": "Bearer ${FAL_KEY}" }
     }
   }
 }

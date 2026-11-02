@@ -28,9 +28,9 @@ test("findSkills ignores roots that do not exist", () => {
 });
 
 test("readEnvKeys reports presence only, from env or .env text", () => {
-  const res = readEnvKeys(["FAL_KEY", "RESEND_API_KEY", "OTHER"],
-    "FAL_KEY=abc123\n# RESEND_API_KEY=commented\nEMPTY=\n", { OTHER: "x" });
-  assert.deepEqual(res, { FAL_KEY: true, RESEND_API_KEY: false, OTHER: true });
+  const res = readEnvKeys(["KIE_API_KEY", "RESEND_API_KEY", "OTHER"],
+    "KIE_API_KEY=abc123\n# RESEND_API_KEY=commented\nEMPTY=\n", { OTHER: "x" });
+  assert.deepEqual(res, { KIE_API_KEY: true, RESEND_API_KEY: false, OTHER: true });
 });
 
 test("findSkills ignores marketplace clones (added, not installed)", () => {

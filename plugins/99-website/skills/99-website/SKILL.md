@@ -37,7 +37,7 @@ When `next-step.mjs` says all steps are done (or `--no-deploy` stopped after aut
 - Lighthouse before and after: the first `audits/lighthouse-*.json` vs `lighthouse-final.json` (median, mobile, all four categories)
 - Pages built (by type) and SEO gates passed
 - Time per step and in total (from the HH:MM notes in project-state.md)
-- Cost: fal images (from `design/images-manifest.json`), keyword data calls
+- Cost: kie.ai images (from `design/images-manifest.json`), keyword data calls
 - Live URL (if deployed), GBP changes proposed and sent
 - Anything still `[NEEDS INPUT:]` or `> CONFIRM:`
 
