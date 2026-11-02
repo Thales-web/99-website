@@ -2,7 +2,8 @@
 // Real (sourced) customer words only: site-data drops any quote without a source.
 // layout "feature": one large quote plus up to two smaller ones (home). "single": one pull quote (service pages).
 import site from "../data/site.json";
-const { service = "", layout = "feature", heading = "What customers say" } = Astro.props;
+import { t, telHref } from "../lib/ui.js";
+const { service = "", layout = "feature", heading = t.testimonialsHeading } = Astro.props;
 const all = site.testimonials || [];
 const match = all.filter((t) => t.service === service);
 const pool = layout === "single" ? (match.length ? match : []) : [...all].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));

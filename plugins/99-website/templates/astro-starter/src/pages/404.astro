@@ -1,12 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
 import site from "../data/site.json";
-const page = { url: "/404/", title: `Page not found | ${site.business.name}`, type: "legal", page_name: "Not found", parent: "/" };
-const content = { description: `That page does not exist. Go back to the ${site.business.name} home page or see our services.` };
+import { t, servicesHubUrl } from "../lib/ui.js";
+const page = { url: "/404/", title: t.notFoundTitle(site.business.name), type: "legal", page_name: t.notFoundH1, parent: "/" };
+const content = { description: t.notFoundDesc(site.business.name) };
 ---
 <Base page={page} content={content}>
 <div class="mx-auto max-w-3xl px-4 py-16">
-  <h1 class="text-4xl font-semibold">Page not found</h1>
-  <p class="mt-4">That page does not exist. Try the <a href="/" class="underline">home page</a> or our <a href="/services/" class="underline">services</a>.</p>
+  <h1 class="text-4xl font-semibold">{t.notFoundH1}</h1>
+  <p class="mt-4">{t.nf[0]}<a href="/" class="underline">{t.nf[1]}</a>{t.nf[2]}<a href={servicesHubUrl ?? "/"} class="underline">{t.nf[3]}</a>{t.nf[4]}</p>
 </div>
 </Base>

@@ -1,5 +1,6 @@
 ---
-const { steps = [], heading = "How it works" } = Astro.props;
+import { t } from "../lib/ui.js";
+const { steps = [], heading = t.stepsHeading } = Astro.props;
 ---
 {steps.length > 0 && (
   <section class="bg-surface py-14">

@@ -1,9 +1,10 @@
 ---
 import site from "../data/site.json";
+import { t, telHref } from "../lib/ui.js";
 const b = site.business;
-const tel = `tel:${b.phone.replace(/[^+\d]/g, "")}`;
+const tel = telHref(b.phone);
 ---
 <p class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-stone/50 pt-4 text-base">
-  {b.primary_cta === "form" && <a href="#estimate" class="font-semibold text-brand underline-offset-4 hover:underline">Get a free estimate</a>}
-  <span class="text-muted">or call <a href={tel} class="font-medium text-ink underline-offset-4 hover:underline">{b.phone}</a></span>
+  {b.primary_cta === "form" && <a href="#estimate" class="font-semibold text-brand underline-offset-4 hover:underline">{t.estimateCta}</a>}
+  {tel && <span class="text-muted">{t.orCall} <a href={tel} class="font-medium text-ink underline-offset-4 hover:underline">{b.phone}</a></span>}
 </p>

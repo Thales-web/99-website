@@ -8,6 +8,7 @@ import EstimateForm from "../components/EstimateForm.astro";
 import CallBar from "../components/CallBar.astro";
 import Faq from "../components/Faq.astro";
 import site from "../data/site.json";
+import { t, telHref } from "../lib/ui.js";
 import { contentFor, hasContent } from "../lib/content.js";
 const { page, content } = Astro.props;
 const b = site.business;
@@ -25,7 +26,7 @@ const band = content.sections?.[0];
 <ProofStrip />
 
 <section class="mx-auto max-w-6xl px-4 py-12 md:py-16">
-  <h2 class="mt-0">What we build</h2>
+  <h2 class="mt-0">{t.homeServices}</h2>
   <div class="mt-8 grid gap-6 md:grid-cols-5">
     {lead && (
       <a href={lead.url} class="group block md:col-span-3">
@@ -72,8 +73,8 @@ const band = content.sections?.[0];
 <section class="mx-auto max-w-6xl px-4 pb-4">
   {site.nav.areas.length > 0 && (
     <>
-      <h2 class="mt-0">Where we work</h2>
-      <p class="mt-3 text-muted">{b.home_city} and towns within about 30 miles.</p>
+      <h2 class="mt-0">{t.homeAreas}</h2>
+      <p class="mt-3 text-muted">{t.homeAreasText(b.home_city)}</p>
       <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {site.nav.areas.map((a) => <li><a href={a.url} class="flex items-center justify-between rounded-md border border-stone px-4 py-3 font-medium hover:border-brand hover:text-brand"><span>{a.name}</span><span aria-hidden="true" class="text-brand">&rarr;</span></a></li>)}
       </ul>

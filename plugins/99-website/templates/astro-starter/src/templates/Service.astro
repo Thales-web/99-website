@@ -11,6 +11,7 @@ import RelatedServices from "../components/RelatedServices.astro";
 import Faq from "../components/Faq.astro";
 import EstimateForm from "../components/EstimateForm.astro";
 import CallBar from "../components/CallBar.astro";
+import { t } from "../lib/ui.js";
 const { page, content } = Astro.props;
 ---
 <Base page={page} content={content}>
@@ -23,10 +24,10 @@ const { page, content } = Astro.props;
   <div class="md:col-span-2"><Sections sections={content.sections} ctaEvery={2} lead /></div>
   <div><AtAGlance content={content} /></div>
 </div>
-<ProcessSteps steps={content.steps} heading={`How we do it, step by step`} />
+<ProcessSteps steps={content.steps} heading={t.serviceProcess} />
 <Testimonials service={page.slug} layout="single" />
 <RelatedServices page={page} related={content.related} />
-<Faq faqs={content.faqs} layout="split" heading={`${page.page_name}: common questions`} />
-<EstimateForm service={page.slug} text={`Tell us about your ${page.page_name.toLowerCase()} project. We call you back within one business day to book a time on site.`} />
+<Faq faqs={content.faqs} layout="split" heading={t.serviceFaq(page.page_name)} />
+<EstimateForm service={page.slug} text={t.serviceFormText(page.page_name)} />
 <CallBar />
 </Base>

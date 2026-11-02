@@ -6,7 +6,7 @@ export function graphFor({ site, page, content, pages }) {
   const url = `${base}${page.url}`;
   const sameAs = [b.gbp_url, ...(b.socials || []).map((s) => s.url)].filter(Boolean);
   const nodes = [
-    { "@type": "WebSite", "@id": `${base}/#website`, url: `${base}/`, name: b.name, publisher: { "@id": orgId } },
+    { "@type": "WebSite", "@id": `${base}/#website`, url: `${base}/`, name: b.name, inLanguage: b.language === "ko" ? "ko-KR" : "en", publisher: { "@id": orgId } },
     {
       "@type": b.schema_type || "LocalBusiness", "@id": orgId, name: b.name, url: `${base}/`,
       ...(b.phone && { telephone: b.phone }), ...(b.email && { email: b.email }),

@@ -1,9 +1,10 @@
 ---
 // layout "split": heading and a call line on the left, the questions on the right (home, service, area).
 import site from "../data/site.json";
-const { faqs = [], layout = "stack", heading = "Questions" } = Astro.props;
+import { t, telHref } from "../lib/ui.js";
+const { faqs = [], layout = "stack", heading = t.faqHeading } = Astro.props;
 const b = site.business;
-const tel = `tel:${b.phone.replace(/[^+\d]/g, "")}`;
+const tel = telHref(b.phone);
 ---
 {faqs.length > 0 && layout === "stack" && (
   <section>
@@ -20,7 +21,7 @@ const tel = `tel:${b.phone.replace(/[^+\d]/g, "")}`;
   <section class="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-3 md:py-16">
     <div>
       <h2 class="mt-0">{heading}</h2>
-      <p class="mt-3 text-muted">Something else on your mind? Call <a href={tel} class="font-medium text-ink underline underline-offset-4">{b.phone}</a>.</p>
+      {tel && <p class="mt-3 text-muted">{t.faqPre}<a href={tel} class="font-medium text-ink underline underline-offset-4">{b.phone}</a>{t.faqPost}</p>}
     </div>
     <div class="border-t border-stone/60 md:col-span-2">
       {faqs.map((f) => (

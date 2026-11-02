@@ -3,9 +3,10 @@
 // one trust line (the page's only eyebrow), the H1, a one-sentence intro, the two CTAs.
 import Img from "./Img.astro";
 import site from "../data/site.json";
+import { t, telHref } from "../lib/ui.js";
 const { content } = Astro.props;
 const b = site.business;
-const tel = `tel:${b.phone.replace(/[^+\d]/g, "")}`;
+const tel = telHref(b.phone);
 const trust = [content.price, content.trust].filter(Boolean).join(". ").replace(/\.\./g, ".");
 ---
 <section class="grid items-center gap-8 py-8 md:grid-cols-2 md:gap-12 md:py-12">
@@ -14,8 +15,8 @@ const trust = [content.price, content.trust].filter(Boolean).join(". ").replace(
     <h1 class="mt-3 text-4xl md:text-5xl">{content.h1}</h1>
     <p class="mt-4 text-lg text-muted">{content.intro}</p>
     <p class="mt-7 flex flex-wrap gap-3">
-      {b.primary_cta === "form" && <a href="#estimate" class="rounded-md bg-brand px-5 py-3 font-medium text-paper transition-colors hover:bg-brand-deep">Get a free estimate</a>}
-      <a href={tel} class="rounded-md border border-brand px-5 py-3 font-medium text-brand transition-colors hover:bg-brand hover:text-paper">Call {b.phone}</a>
+      {b.primary_cta === "form" && <a href="#estimate" class="rounded-md bg-brand px-5 py-3 font-medium text-paper transition-colors hover:bg-brand-deep">{t.estimateCta}</a>}
+      {tel && <a href={tel} class="rounded-md border border-brand px-5 py-3 font-medium text-brand transition-colors hover:bg-brand hover:text-paper">{t.call(b.phone)}</a>}
     </p>
   </div>
   {content.hero_image

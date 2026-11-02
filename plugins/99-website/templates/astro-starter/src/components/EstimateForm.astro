@@ -1,10 +1,14 @@
 ---
-// The page's closing section: the lead form, with the phone beside it. id="estimate" is the target of
-// every in-page "Get a free estimate" link. Posts to /api/contact (a Pages Function, added at deploy).
+// The page's closing section: the estimate form, with the phone beside it when there is one. id="estimate" is the target of
+// every in-page estimate link. Posts to /api/contact (a Pages Function, added at deploy).
+// Fields: name, phone, email (optional), area, home type, building name (optional), service, photos (optional, up to 3),
+// message, privacy consent (required). Text comes from src/lib/ui.js.
 import site from "../data/site.json";
-const { service = "", heading = "Get a free estimate", text = "Tell us about your yard. We call you back within one business day to book a time on site." } = Astro.props;
+import { t, telHref, privacyUrl } from "../lib/ui.js";
+const f = t.form;
+const { service = "", heading = f.heading, text = f.text } = Astro.props;
 const b = site.business;
-const tel = `tel:${b.phone.replace(/[^+\d]/g, "")}`;
+const tel = telHref(b.phone);
 const field = "mt-1 w-full rounded-md border border-ink/25 bg-paper px-3 py-2.5 text-base focus:border-brand focus:outline-none";
 ---
 <section id="estimate" class="scroll-mt-6 bg-surface">
@@ -12,27 +16,46 @@ const field = "mt-1 w-full rounded-md border border-ink/25 bg-paper px-3 py-2.5 
     <div class="md:col-span-2">
       <h2 class="mt-0 text-3xl md:text-4xl">{heading}</h2>
       <p class="mt-4 text-lg text-muted">{text}</p>
-      <dl class="mt-8 space-y-4 border-t border-stone pt-6">
-        <div><dt class="text-sm text-muted">Call</dt><dd><a href={tel} class="text-xl font-semibold text-brand hover:underline">{b.phone}</a></dd></div>
-        {b.email && <div><dt class="text-sm text-muted">Email</dt><dd><a href={`mailto:${b.email}`} class="font-medium hover:text-brand hover:underline">{b.email}</a></dd></div>}
-        {b.hours && <div><dt class="text-sm text-muted">Hours</dt><dd>{b.hours}</dd></div>}
-      </dl>
+      {(tel || b.email || b.hours) && (
+        <dl class="mt-8 space-y-4 border-t border-stone pt-6">
+          {tel && <div><dt class="text-sm text-muted">{f.call}</dt><dd><a href={tel} class="text-xl font-semibold text-brand hover:underline">{b.phone}</a></dd></div>}
+          {b.email && <div><dt class="text-sm text-muted">{f.email}</dt><dd><a href={`mailto:${b.email}`} class="font-medium hover:text-brand hover:underline">{b.email}</a></dd></div>}
+          {b.hours && <div><dt class="text-sm text-muted">{f.hours}</dt><dd>{b.hours}</dd></div>}
+        </dl>
+      )}
     </div>
-    <form method="post" action="/api/contact" class="grid gap-4 rounded-md bg-paper p-6 sm:grid-cols-2 md:col-span-3 md:p-8">
-      <label class="text-sm font-medium">Name<input name="name" required autocomplete="name" class={field} /></label>
-      <label class="text-sm font-medium">Phone<input name="phone" type="tel" required autocomplete="tel" class={field} /></label>
-      <label class="text-sm font-medium">Email<input name="email" type="email" autocomplete="email" class={field} /></label>
-      <label class="text-sm font-medium">Town or neighborhood<input name="town" autocomplete="address-level2" class={field} /></label>
-      <label class="text-sm font-medium sm:col-span-2">What do you need?
-        <select name="service" class={field}>
-          {site.nav.services.map((s) => <option value={s.name} selected={s.url.includes(`/${service}/`) && Boolean(service)}>{s.name}</option>)}
-          <option value="Other" selected={!service}>Something else</option>
+    <form method="post" action="/api/contact" enctype="multipart/form-data" class="grid gap-4 rounded-md bg-paper p-6 sm:grid-cols-2 md:col-span-3 md:p-8">
+      <label class="text-sm font-medium">{f.name}<input name="name" required autocomplete="name" class={field} /></label>
+      <label class="text-sm font-medium">{f.phone}<input name="phone" type="tel" required autocomplete="tel" inputmode="tel" class={field} /></label>
+      <label class="text-sm font-medium">{f.emailField}<input name="email" type="email" autocomplete="email" class={field} /></label>
+      <label class="text-sm font-medium">{f.town}<input name="town" autocomplete="address-level2" class={field} /></label>
+      <label class="text-sm font-medium">{f.housing}
+        <select name="housing" class={field}>
+          {f.housingOptions.map((o) => <option value={o}>{o}</option>)}
         </select>
       </label>
-      <label class="text-sm font-medium sm:col-span-2">Tell us about the project<textarea name="message" rows="4" class={field}></textarea></label>
-      <label class="hidden" aria-hidden="true">Leave empty<input name="company_website" tabindex="-1" autocomplete="off" /></label>
+      <label class="text-sm font-medium">{f.building}<input name="building" autocomplete="off" class={field} /></label>
+      <label class="text-sm font-medium sm:col-span-2">{f.service}
+        <select name="service" class={field}>
+          {site.nav.services.map((s) => <option value={s.name} selected={Boolean(service) && s.url.includes(`/${service}/`)}>{s.name}</option>)}
+          <option value="Other" selected={!service}>{f.other}</option>
+        </select>
+      </label>
+      <label class="text-sm font-medium sm:col-span-2">{f.message}<textarea name="message" rows="4" class={field}></textarea></label>
+      <label class="text-sm font-medium sm:col-span-2">{f.photos}
+        <input name="photos" type="file" accept="image/*" multiple class={field} />
+        <span class="mt-1 block text-sm font-normal text-muted">{f.photosHelp}</span>
+      </label>
+      <div class="sm:col-span-2">
+        <label class="flex items-start gap-3 text-sm font-medium">
+          <input name="consent" type="checkbox" value="yes" required class="mt-1 h-5 w-5 shrink-0 accent-brand" />
+          <span>{f.consent}</span>
+        </label>
+        <p class="mt-2 text-sm text-muted">{f.consentDetail} <a href={privacyUrl} class="underline" target="_blank" rel="noopener">{f.privacyLink}</a></p>
+      </div>
+      <label class="hidden" aria-hidden="true">{f.honeypot}<input name="company_website" tabindex="-1" autocomplete="off" /></label>
       {b.turnstile_site_key && <div class="cf-turnstile sm:col-span-2" data-sitekey={b.turnstile_site_key}></div>}
-      <button type="submit" class="rounded-md bg-brand px-6 py-3 font-medium text-paper transition-colors hover:bg-brand-deep active:translate-y-px sm:col-span-2 sm:justify-self-start">Get a free estimate</button>
+      <button type="submit" class="rounded-md bg-brand px-6 py-3 font-medium text-paper transition-colors hover:bg-brand-deep active:translate-y-px sm:col-span-2 sm:justify-self-start">{f.submit}</button>
     </form>
     {b.turnstile_site_key && (
       <script is:inline>
