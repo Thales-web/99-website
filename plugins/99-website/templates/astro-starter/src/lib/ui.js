@@ -37,10 +37,22 @@ const en = {
   form: {
     heading: "Get a free estimate", text: "Tell us about your yard. We call you back within one business day to book a time on site.",
     call: "Call", email: "Email", hours: "Hours",
-    name: "Name", phone: "Phone", emailField: "Email", town: "Town or neighborhood", housing: "Home type", housingOptions: ["Apartment", "Villa or multi-unit", "House", "Shop or office", "Other"],
+    name: "Name", phone: "Phone", emailField: "Email (optional)", town: "Town or neighborhood", housing: "Home type (optional)", none: "Not specified", housingOptions: ["Apartment", "Villa or multi-unit", "House", "Shop or office", "Other"],
     building: "Complex or building name (optional)", service: "What do you need?", other: "Something else", message: "Tell us about the project",
+    timing: "When do you want the work done? (optional)", timingOptions: ["This month", "Next month", "In 2 to 3 months", "Not decided yet"],
     photos: "Photos (optional)", photosHelp: "Up to 3 photos, 5 MB each.",
-    consent: "I agree to the collection and use of my personal information.", consentDetail: "Collected: name, phone, email, area, home type, building name, photos, message. Purpose: replying to this estimate request.", privacyLink: "Privacy policy",
+    privacyLink: "Read the full privacy policy",
+    consents: ({ recipient, retention }) => [
+      { name: "consent_collect", required: true, label: "[Required] I agree to the collection and use of my personal information.",
+        rows: [["Purpose", "Receiving this estimate request and connecting you with an installer"], ["Items", "Name, phone, area, service / (optional) email, home type, building name, photos, timing, message"], ["Kept for", retention ? `${retention} from the request date` : "As stated in the privacy policy"]],
+        refuse: "You may refuse. If you refuse, we cannot accept the request." },
+      { name: "consent_provide", required: true, label: "[Required] I agree to my personal information being provided to an installer.",
+        rows: [["Recipient", recipient], ["Purpose of use", "Estimate talks, site check, contract guidance"], ["Items", "Name, phone, area, service / (if entered) email, home type, building name, photos, timing, message"], ["Kept by recipient for", retention ? `${retention} from the date provided` : "As stated in the privacy policy"]],
+        refuse: "You may refuse. If you refuse, we cannot connect you with an installer and you cannot receive an estimate." },
+      { name: "consent_marketing", required: false, label: "[Optional] I agree to receive text messages about installation news.",
+        rows: [["Purpose", "Installation news by text message"], ["Items", "Name, phone"], ["Kept for", retention ? `Until you withdraw, at most ${retention} from the request date` : "Until you withdraw"]],
+        refuse: "You can still request an estimate if you do not agree." },
+    ],
     submit: "Get a free estimate", honeypot: "Leave empty",
   },
 };
@@ -76,15 +88,35 @@ const ko = {
   form: {
     heading: "사진으로 견적 받기", text: "시공할 곳의 상황과 사진을 보내 주세요. 확인 후 연락드립니다.",
     call: "전화", email: "이메일", hours: "운영 시간",
-    name: "이름", phone: "연락처", emailField: "이메일 (선택)", town: "지역 (동 이름)", housing: "주거 형태", housingOptions: ["아파트", "빌라·다세대·연립", "단독·다가구주택", "상가·사무실", "기타"],
+    name: "이름", phone: "휴대전화 번호", emailField: "이메일 (선택)", town: "시공할 동네 (동 이름)", housing: "주거 형태 (선택)", none: "선택 안 함", housingOptions: ["아파트", "빌라·다세대·연립", "단독·다가구주택", "상가·사무실", "기타"],
     building: "단지 또는 건물 이름 (선택)", service: "어떤 시공이 필요하세요?", other: "그 외 또는 잘 모르겠음", message: "시공 상황을 알려 주세요",
+    timing: "희망 시공 시기 (선택)", timingOptions: ["이번 달", "다음 달", "2~3개월 뒤", "아직 정하지 않음"],
     photos: "사진 (선택)", photosHelp: "시공할 부위를 정면과 모서리까지 찍어 주세요. 최대 3장, 장당 5MB.",
-    consent: "개인정보 수집·이용에 동의합니다. (필수)", consentDetail: "수집 항목: 이름, 연락처, 이메일, 지역, 주거 형태, 단지·건물 이름, 사진, 문의 내용. 이용 목적: 견적 문의 확인과 회신.", privacyLink: "개인정보 처리방침 보기",
+    privacyLink: "개인정보 처리방침 전문 보기",
+    consents: ({ recipient, retention }) => [
+      { name: "consent_collect", required: true, label: "[필수] 개인정보 수집·이용에 동의합니다.",
+        rows: [["목적", "견적 문의 접수와 시공 업체 연결"], ["항목", "이름, 휴대전화 번호, 시공할 동네, 시공 부위 / (선택) 이메일, 주거 형태, 단지·건물 이름, 사진, 시공 시기, 문의 내용"], ["보유 기간", retention ? `문의 접수일부터 ${retention}` : "개인정보 처리방침에 따름"]],
+        refuse: "동의를 거부할 수 있습니다. 거부하면 견적 문의를 접수할 수 없습니다." },
+      { name: "consent_provide", required: true, label: "[필수] 개인정보를 시공 업체에 제공하는 것에 동의합니다.",
+        rows: [["제공받는 자", recipient], ["이용 목적", "견적 상담, 현장 확인, 시공 계약 안내"], ["제공 항목", "이름, 휴대전화 번호, 시공할 동네, 시공 부위 / (입력한 경우) 이메일, 주거 형태, 단지·건물 이름, 사진, 시공 시기, 문의 내용"], ["제공받는 자의 보유 기간", retention ? `제공일부터 ${retention}` : "개인정보 처리방침에 따름"]],
+        refuse: "동의를 거부할 수 있습니다. 거부하면 시공 업체에 연결할 수 없어 견적을 받을 수 없습니다." },
+      { name: "consent_marketing", required: false, label: "[선택] 시공 관련 소식 문자 수신에 동의합니다.",
+        rows: [["목적", "시공 관련 소식 안내(문자)"], ["항목", "이름, 휴대전화 번호"], ["보유 기간", retention ? `동의를 철회할 때까지, 길어도 문의 접수일부터 ${retention}` : "동의를 철회할 때까지"]],
+        refuse: "동의하지 않아도 견적 문의를 할 수 있습니다." },
+    ],
     submit: "견적 문의 보내기", honeypot: "비워 두세요",
   },
 };
 
 export const t = lang === "ko" ? ko : en;
+
+// Who receives the lead and how long data is kept: both come from client.md (lead_recipient, retention_period).
+// With no recipient yet, the consent text names no company ("the installer we connect you with"), and verify-seo
+// refuses an indexable Korean build until lead_recipient and retention_period are set.
+export const consentContext = {
+  recipient: b.lead_recipient || (lang === "ko" ? "연결되는 송파 지역 시공 업체" : "the installer we connect you with"),
+  retention: b.retention_period || "",
+};
 
 // "tel:" link, or "" when there is no phone number.
 export const telHref = (p) => (p && String(p).replace(/[^+\d]/g, "") ? `tel:${String(p).replace(/[^+\d]/g, "")}` : "");

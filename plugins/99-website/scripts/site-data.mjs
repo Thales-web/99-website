@@ -41,7 +41,7 @@ export function buildSiteData({ siteMapCsv, clientMd, siteUrl, index = false, te
     noindex: !index,
     business: {
       name: fm.business_name || "", phone: fm.phone || "", email: fm.email || "", hours: fm.hours || "",
-      home_city: fm.home_city || "", country: fm.country || "", location_code: fm.location_code || "", language: fm.language_code || "en", naver_site_verification: fm.naver_site_verification || "", author_type: fm.author_type === "Organization" ? "Organization" : "Person",
+      home_city: fm.home_city || "", country: fm.country || "", location_code: fm.location_code || "", language: fm.language_code || "en", naver_site_verification: fm.naver_site_verification || "", author_type: fm.author_type === "Organization" ? "Organization" : "Person", lead_recipient: fm.lead_recipient || "", retention_period: fm.retention_period || "",
       primary_cta: fm.primary_cta || "form", domain: fm.domain || "",
       demo: /FICTIONAL demo business/i.test(clientMd), sensitive: fm.sensitive_niche === "true",
       founded: fm.founded || "", turnstile_site_key: fm.turnstile_site_key || "",

@@ -16,6 +16,8 @@ gsc_property:         # e.g. sc-domain:example.com
 ga4_measurement_id:
 turnstile_site_key:   # Cloudflare Turnstile site key for the estimate form (public, not a secret)
 naver_site_verification:   # Naver Search Advisor ownership meta content value (Korean sites)
+lead_recipient:       # Korean sites: company that receives the leads, named in the third-party consent (must match the privacy policy)
+retention_period:     # Korean sites: how long leads are kept, for example "1년" (must match the privacy policy)
 author_type:          # blog author schema type: Person (default) or Organization (use when the author is the site or business name)
 gbp_exists:
 founded:              # year, only if confirmed

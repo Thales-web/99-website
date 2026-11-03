@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3 (2026-11-03, three consents)
+
+- **Estimate form (Korean law)**: three separate consent checkboxes: collection and use (required), providing to the installer (required, names the recipient), marketing text messages (optional). Each shows purpose, items, retention and the consequence of refusing. New fields: desired timing, home type is optional, area is required.
+- **functions/api/contact.js**: requires both required consents and the area, and writes the consent record (three answers and a timestamp) into the lead email.
+- **client.md / site.json**: `lead_recipient` and `retention_period` feed the consent text. `verify-seo.mjs` fails an indexable Korean build until both are set (staging stays noindex).
+- Tests: contact function, consent gate, site-data keys.
+
 ## 0.1.2 (2026-11-03, Korean checks)
 
 - **check-content.mjs**: the 50% similarity check now reads Hangul (it was always 0 for Korean text), and never-say phrases with non-ASCII letters match as substrings (`\b` is ASCII-only, so Korean phrases were never found). Latin phrases keep whole-word matching.

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { handleContact } from "../plugins/99-website/templates/astro-starter/functions/api/contact.js";
 
-const form = (o = {}) => new Map(Object.entries({ name: "Ana", phone: "704 555 0100", email: "ana@x.example", service: "Paver Patios", message: "Patio", "cf-turnstile-response": "tok", company_website: "", consent: "yes", ...o }));
+const form = (o = {}) => new Map(Object.entries({ name: "Ana", phone: "704 555 0100", email: "ana@x.example", service: "Paver Patios", message: "Patio", "cf-turnstile-response": "tok", company_website: "", town: "Charlotte", consent_collect: "yes", consent_provide: "yes", ...o }));
 const env = { TURNSTILE_SECRET: "s", RESEND_API_KEY: "k", LEAD_TO: "to@x.example", LEAD_FROM: "site@x.example", LANG: "en" };
 const fetchOk = (calls) => async (url, init) => { calls.push({ url, body: String(init.body) }); return new Response(JSON.stringify({ success: true, id: "1" }), { status: 200 }); };
 

@@ -50,8 +50,18 @@ export function verifyPage({ html, page, business, siteUrl, expectNoindex }) {
   return f;
 }
 
+// Korean consent text must name the recipient and the retention period before the site can be indexed (staging stays noindex).
+export function consentFailures(site) {
+  const b = site.business || {};
+  if (site.noindex || String(b.language || "").toLowerCase() !== "ko") return [];
+  const f = [];
+  if (!b.lead_recipient) f.push("site: lead_recipient is empty in client.md, so the third-party consent names no company (set it, and match the privacy policy)");
+  if (!b.retention_period) f.push("site: retention_period is empty in client.md, so the consent text gives no retention period (set it, and match the privacy policy)");
+  return f;
+}
+
 export function verifySite({ dist, site }) {
-  const failures = [];
+  const failures = [...consentFailures(site)];
   for (const page of site.pages) {
     const file = path.join(dist, page.file);
     if (!fs.existsSync(file)) { failures.push(`${page.url}: not built (${page.file})`); continue; }

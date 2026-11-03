@@ -36,3 +36,9 @@ test("schema inLanguage follows the language", () => {
   const g = graphFor({ site, page, content: {}, pages: [page] });
   assert.equal(g["@graph"].find((n) => n["@type"] === "WebSite").inLanguage, "ko-KR");
 });
+
+test("lead_recipient and retention_period reach site.json", () => {
+  const d = buildSiteData({ siteMapCsv: csv, clientMd: md("lead_recipient: 테스트시공   # who receives leads\nretention_period: 1년\n"), siteUrl: "https://x.example" });
+  assert.equal(d.business.lead_recipient, "테스트시공");
+  assert.equal(d.business.retention_period, "1년");
+});
