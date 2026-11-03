@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 (2026-11-03, Korean localization)
+
+- **astro-starter**: every visitor-facing string moved to `src/lib/ui.js` (English and Korean). The language follows `language_code` in `client.md`; `site-data.mjs` now writes it to `site.json` as `business.language` (default `en`, so existing English sites do not change).
+- **Estimate form**: new fields (home type, building name, photos up to 3 x 5 MB) and a required privacy consent checkbox. `functions/api/contact.js` checks consent, validates and attaches photos, and answers in Korean unless `LANG=en`.
+- **Layout and links**: `<html lang>`, `og:locale`, schema `inLanguage`, Hangul font stack and word-based line breaks. Header and CTA links follow the site map (contact page may be `/estimate/`). Call buttons and call lines are hidden when `phone` is blank.
+- **keyword.mjs**: keyword matching now works for non-Latin text (Hangul), so `validate-sitemap.mjs` no longer rejects every Korean title. English matching is unchanged.
+- Tests: Korean form and keyword tests added; the English contact test now sends `consent`.
+
 ## 0.1.0 (2026-09-29, Stage 1)
 
 Tested end to end on two sites: a real rebuild (myinclusion.com.au, NDIS, Australia) and a fictional new build (Cedar & Stone Landscapes, Charlotte NC).
