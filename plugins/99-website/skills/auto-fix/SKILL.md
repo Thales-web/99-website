@@ -31,3 +31,6 @@ If the only way to 99 is one of these, stop and tell Nico what the trade is.
 If a fix belongs in every future site (a template or starter change), port it to `templates/astro-starter/` in the plugin repo and log it in the design doc's test notes. That is how the next site starts at 99.
 
 Update project-state row `auto-fix` with passes used and final scores.
+
+## Korean sites (`language_code: ko`)
+The guardrail "never swap the self-hosted fonts for system fonts" does not apply: a Korean site starts on the system Hangul stack (`design/style.md` says so). Do not add a Hangul web font to gain points or look.

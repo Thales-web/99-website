@@ -44,3 +44,10 @@ GA4 and Search Console are the next manual steps and are not part of this skill 
 
 ## House rules
 - No em dashes. Never deploy without a yes. Never remove noindex from a demo business.
+
+## Korean sites (`language_code: ko`)
+Naver Search Advisor (searchadvisor.naver.com) is a manual step after the live deploy, in addition to Search Console:
+1. Add the live site and pick the HTML meta tag ownership check.
+2. Put the tag's `content` value in `client.md` as `naver_site_verification:`, run `site-data.mjs` with the live `--site-url` (and `--index` for a real launch), rebuild and redeploy.
+3. Back in Search Advisor confirm ownership, submit `https://<domain>/sitemap.xml`, and request collection of the home page.
+Cloudflare Pages and the form function work from Korea. The form sends the visitor's data to Cloudflare and Resend (outside Korea): the privacy policy must say so.

@@ -49,3 +49,10 @@ Run `/impeccable shape` on the home page and the service template. `design/PRODU
 ## House rules
 - No em dashes. Nothing that moves on scroll. Real HTML headings always.
 - The design must not look AI-generated: no centred-everything hero with a gradient blob, no three identical icon cards, no stock "smiling team" images.
+
+## Korean sites (`language_code: ko`)
+These override the font rules above. Hangul is not in a Latin subset, so a Latin-only self-hosted font leaves every Korean character to a fallback anyway.
+- Fonts: the system Hangul stack that the starter's `@theme` already carries (Apple SD Gothic Neo, Malgun Gothic, Noto Sans KR). Skip the fontsource step, the `@font-face` rules and the font preload. Write "fonts: system Hangul stack" in `design/style.md`. No Google Fonts `<link>`, no Hangul web font (a full Hangul font is megabytes).
+- Keep the `html:lang(ko)` rules in `global.css` (`word-break: keep-all`). They sit outside `@theme` on purpose.
+- Line length: 35 to 45 Hangul characters, not 45 to 75. The starter's `p { max-width: 68ch }` is about 37 characters; keep it. Line height 1.6 to 1.8.
+- One CTA label site-wide: the starter's `t.estimateCta` ("사진으로 견적 받기"). Do not add "무료" (free) unless the owner confirmed it.

@@ -15,6 +15,8 @@ hours:
 gsc_property:         # e.g. sc-domain:example.com
 ga4_measurement_id:
 turnstile_site_key:   # Cloudflare Turnstile site key for the estimate form (public, not a secret)
+naver_site_verification:   # Naver Search Advisor ownership meta content value (Korean sites)
+author_type:          # blog author schema type: Person (default) or Organization (use when the author is the site or business name)
 gbp_exists:
 founded:              # year, only if confirmed
 trust_points:         # 3-4 confirmed proof points, separated by | (shown under every hero)

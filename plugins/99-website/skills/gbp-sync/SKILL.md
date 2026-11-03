@@ -34,3 +34,6 @@ Append `| <date> | Checkpoint 5: GBP | <who> | <n> changes approved, <n> sent |`
 
 ## House rules
 - No em dashes. Read-only by default. The site's facts come from `business/`; the profile is made to match the site, not the other way round, unless the owner says the profile is right.
+
+## Korean sites (`language_code: ko`)
+In Korea the listings that matter first are Naver Place and KakaoMap, which this skill does not read or write. `gbp-parity.mjs` compares names with a Latin-only key, so Hangul names cannot be compared by script. For a Korean business, write `audits/gbp-starter-sheet.md` (Step 4) and compare the Google profile by hand; plan Naver Place as a separate manual task.

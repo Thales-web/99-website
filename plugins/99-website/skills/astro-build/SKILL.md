@@ -46,3 +46,12 @@ Say: "Copy written for <n> pages, build passes. Next: /99-website:seo-foundation
 
 ## House rules
 - No em dashes. Fewer, truer words beat filler. Every page at least 50% unique vs its siblings (the checker enforces it).
+
+## Korean sites (`language_code: ko`)
+- Write all copy in Korean. Count length in 어절 (space-separated words), not English words. If `research/` or the Site Map has a per-page length standard (the v25 plan uses 800 to 1,200 어절 for service pages), it replaces the 950 to 1,300 above. The checker does not count words.
+- Descriptions: the checker enforces 70 to 160 characters; aim for 80 to 110 so search results do not cut the end. Title and H1 keyword rules already work with Hangul (particles attached to a word are accepted).
+- Never-say list: pass the Korean phrases to `check-content.mjs --never`. Korean phrases are matched as substrings, so "최저가" also catches "최저가로". Prices, "무료", response times and guarantees only when `business/` confirms them.
+- `price`: if `services.md` says "don't show prices", leave `price` out (the checker only warns). Never invent a "from" price.
+- About, privacy-policy and terms are not covered by the page rules above. Write them only from drafts in `business/notes/` (for a lead-connection site, About explains how requests are handled, not an owner story). The privacy policy needs the owner's retention period and an overseas-transfer note (the form function uses Cloudflare and Resend); it must be legally reviewed before launch.
+- Blog author: use the owner named in `client.md`. If none is named yet, use the temporary label from `client.md` and `author_type: Organization`; replace it when the business name is set.
+- Contact and estimate pages: leave out phone, hours and response time that are not in `business/`. Never write `[NEEDS INPUT]` into a content file (the checker fails on it).

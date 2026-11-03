@@ -7,7 +7,8 @@ import { pathToFileURL } from "node:url";
 import { kwIndex } from "./lib/keyword.mjs";
 
 const KEYWORD_TYPES = new Set(["home", "service", "area", "blog"]);
-const words = (s) => s.toLowerCase().replace(/[^a-z0-9$ ]+/g, " ").split(/\s+/).filter(Boolean);
+// Unicode letters and digits, so Hangul counts. (The old a-z0-9 filter turned Korean text into nothing: similarity was always 0.)
+const words = (s) => s.toLowerCase().replace(/[^\p{L}\p{N}$ ]+/gu, " ").split(/\s+/).filter(Boolean);
 const grams = (s) => { const w = words(s); const g = new Set(); for (let i = 0; i + 2 < w.length; i++) g.add(w.slice(i, i + 3).join(" ")); return g; };
 export function similarity(a, b) {
   const A = grams(a); const B = grams(b);
@@ -15,6 +16,11 @@ export function similarity(a, b) {
   let inter = 0;
   for (const g of A) if (B.has(g)) inter++;
   return inter / (A.size + B.size - inter);
+}
+export function neverHit(text, phrase) {
+  const t = text.toLowerCase(); const n = phrase.toLowerCase();
+  if (/[^\x00-\x7f]/.test(n)) return t.includes(n);
+  return new RegExp(`\\b${n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(t);
 }
 const allText = (c) => JSON.stringify(c);
 const bodyText = (c) => [c.intro, ...(c.sections || []).flatMap((s) => [s.h2, ...(s.paragraphs || []), ...(s.bullets || [])])].filter(Boolean).join(" ");
@@ -35,8 +41,9 @@ export function checkContent({ site, contents, never = [] }) {
     if (t.includes("\u2014")) err(p.url, "text", "contains an em dash");
     if (/\[NEEDS INPUT/i.test(t)) err(p.url, "text", "contains [NEEDS INPUT]");
     if (/lorem ipsum/i.test(t)) err(p.url, "text", "contains lorem ipsum");
-    // Whole words only: "eco" must not match "recommend" or "second".
-    for (const n of never) if (n && new RegExp(`\\b${n.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`).test(t.toLowerCase())) err(p.url, "text", `uses a never-say phrase: "${n}"`);
+    // Latin phrases: whole words only ("eco" must not match "recommend" or "second").
+    // Phrases with non-ASCII letters (Hangul): plain substring, because \b is ASCII-only and particles attach to words ("최저가로").
+    for (const n of never) if (n && neverHit(t, n)) err(p.url, "text", `uses a never-say phrase: "${n}"`);
     if (p.type === "service") {
       const s = (c.steps || []).length; const q = (c.faqs || []).length;
       if (s < 3 || s > 5) err(p.url, "steps", `${s} steps, want 3 to 5`);

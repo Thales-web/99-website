@@ -17,6 +17,12 @@ const graph = graphFor({ site, page, content, pages: site.pages });
     <title>{page.title}</title>
     <meta name="description" content={content.description} />
     <meta property="og:locale" content={t.locale} />
+    <meta property="og:type" content={page.type === "blog" ? "article" : "website"} />
+    {site.business.name && <meta property="og:site_name" content={site.business.name} />}
+    <meta property="og:title" content={page.title} />
+    <meta property="og:description" content={content.description} />
+    <meta property="og:url" content={canonical} />
+    {site.business.naver_site_verification && <meta name="naver-site-verification" content={site.business.naver_site_verification} />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {(site.noindex || noindex) && <meta name="robots" content="noindex, nofollow" />}

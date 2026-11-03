@@ -31,3 +31,6 @@ Print: pages checked, gates passed, and the list of fixes made. Update project-s
 
 ## House rules
 - No em dashes. Never add `noindex` to pass a check, never hide content, never drop a page.
+
+## Korean sites (`language_code: ko`)
+All three gates work with Hangul (the keyword check accepts particles attached to a word). The starter also writes Open Graph tags (KakaoTalk and Naver link previews) and, when `naver_site_verification` is set in `client.md`, the Naver Search Advisor ownership meta tag. Blog Article schema uses the author type from `author_type` in `client.md` (Person or Organization). An `og:image` is not added because the gates reject raster images and not every preview crawler reads WebP.

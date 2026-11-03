@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2 (2026-11-03, Korean checks)
+
+- **check-content.mjs**: the 50% similarity check now reads Hangul (it was always 0 for Korean text), and never-say phrases with non-ASCII letters match as substrings (`\b` is ASCII-only, so Korean phrases were never found). Latin phrases keep whole-word matching.
+- **astro-starter**: Open Graph tags, optional `naver_site_verification` meta, system Hangul font stack (no web font), blog Article author type from `author_type` (Person or Organization).
+- **site-data.mjs**: writes `naver_site_verification` and `author_type` to `site.json`. `client.md` template gets both keys.
+- **Skills**: a "Korean sites" section in site-design, site-images, astro-build, auto-fix, seo-foundation, deploy-and-connect and gbp-sync (fonts, line length, 어절 counts, legal pages, Naver Search Advisor, Naver Place).
+- Tests: Hangul similarity and never-say, site-data and schema keys.
+
 ## 0.1.1 (2026-11-03, Korean localization)
 
 - **astro-starter**: every visitor-facing string moved to `src/lib/ui.js` (English and Korean). The language follows `language_code` in `client.md`; `site-data.mjs` now writes it to `site.json` as `business.language` (default `en`, so existing English sites do not change).

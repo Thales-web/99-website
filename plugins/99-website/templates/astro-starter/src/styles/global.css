@@ -10,9 +10,9 @@
   --color-brand: #2a4a3c;
   --color-brand-deep: #1b3228;
   --color-accent: #2a4a3c;
-  /* Korean: self-host Pretendard in public/fonts if the design asks for it; these system fonts cover Hangul on every OS. */
-  --font-display: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+  /* Korean (font option A): system Hangul fonts only, nothing to download. Apple SD Gothic Neo (iOS, macOS), Malgun Gothic (Windows), Noto Sans KR (Android, Chrome OS). */
+  --font-display: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
 }
 
 html { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); }

@@ -39,3 +39,8 @@ Show the owner a contact sheet (`design/contact-sheet.html`: every master in a 4
 
 ## House rules
 - No em dashes. Real beats AI. AI never poses as proof.
+
+## Korean sites (`language_code: ko`)
+- Scenes must look like Korean housing, or the model draws Western interiors: name the home type in each scene (apartment, villa or multi-unit, detached house) and the real fixtures (steel fire-rated entrance door with a digital lock, cherry-coloured moulding, laminate or vinyl sink doors, aluminium sash frames).
+- No text in the image, no Korean signage, no people, no other company's photos or look-alike results. AI images are illustrations of a method, never "our job".
+- Alt text and `image_alt` in Korean, describing the part and the stage (for example "싱크대 문짝 모서리에 프라이머 바르는 장면").

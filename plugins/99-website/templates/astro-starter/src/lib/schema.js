@@ -31,7 +31,7 @@ export function graphFor({ site, page, content, pages }) {
   if (page.type === "blog") {
     nodes.push({
       "@type": "Article", "@id": `${url}#article`, headline: content.h1, url,
-      ...(content.author && { author: { "@type": "Person", name: content.author } }),
+      ...(content.author && { author: { "@type": b.author_type === "Organization" ? "Organization" : "Person", name: content.author } }),
       ...(content.date && { datePublished: content.date }), publisher: { "@id": orgId },
     });
   }
