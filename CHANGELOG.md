@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 (2026-11-03, skill frontmatter)
+
+- **seo-foundation**: the description held an unquoted `: ` ("production build: titles, ..."), which a strict YAML parser rejects, so the skill could fail to load in Claude Code. The description is now quoted. The bug was in the first release.
+- Test: every `SKILL.md` frontmatter value that contains `: ` or ` #` must be quoted or a block scalar.
+
 ## 0.1.5 (2026-11-03, Windows support)
 
 - **doctor.mjs and lighthouse-gate.mjs**: `npx` is started through `lib/proc.mjs` (node runs npx-cli.js directly on Windows). Before, Windows reported "Lighthouse could not run" and a false "wrangler not logged in" on a working machine, and the Lighthouse gate could not start.

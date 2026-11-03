@@ -1,6 +1,6 @@
 ---
 name: seo-foundation
-description: Use after astro-build, and again after any change to the site. Runs the technical SEO layer on the production build: titles, H1s, descriptions, canonicals, noindex mode, images, schema as a claims layer, internal links, robots.txt, sitemap.xml, llms.txt, _headers and _redirects. Fixes what fails and re-runs until every gate passes.
+description: "Use after astro-build, and again after any change to the site. Runs the technical SEO layer on the production build: titles, H1s, descriptions, canonicals, noindex mode, images, schema as a claims layer, internal links, robots.txt, sitemap.xml, llms.txt, _headers and _redirects. Fixes what fails and re-runs until every gate passes."
 ---
 
 # SEO foundation
