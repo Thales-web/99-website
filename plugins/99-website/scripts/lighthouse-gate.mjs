@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFile } from "node:child_process";
+import { npxSpec } from "./lib/proc.mjs";
 import { promisify } from "node:util";
 import http from "node:http";
 import zlib from "node:zlib";
@@ -135,8 +136,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       for (let i = 1; i <= runs; i++) {
         const out = path.join(rawDir, `${page.url === "/" ? "home" : page.url.replace(/^\/|\/$/g, "").replace(/\//g, "-")}-${i}.json`);
         // Async on purpose: a blocking call would freeze serveDist (same process) and Lighthouse would time out.
-        await promisify(execFile)("npx", ["-y", "lighthouse@12", `http://localhost:${port}${page.url}`, "--quiet", "--chrome-flags=--headless=new",
-          `--only-categories=${CATS.join(",")}`, "--output=json", `--output-path=${out}`], { maxBuffer: 64 * 1024 * 1024 });
+        const lh = npxSpec(["-y", "lighthouse@12", `http://localhost:${port}${page.url}`, "--quiet", "--chrome-flags=--headless=new",
+          `--only-categories=${CATS.join(",")}`, "--output=json", `--output-path=${out}`]);
+        await promisify(execFile)(lh.cmd, lh.args, { maxBuffer: 64 * 1024 * 1024, shell: Boolean(lh.shell) });
         const lhr = JSON.parse(fs.readFileSync(out, "utf8"));
         lhrs.push(lhr); scores.push(categoryScores(lhr, { ignore }));
       }

@@ -7,6 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
+import { npxSpec } from "./lib/proc.mjs";
 
 export function findSkills(roots, names) {
   const found = Object.fromEntries(names.map((n) => [n, null]));
@@ -42,7 +43,8 @@ export function readEnvKeys(names, envFileText, env) {
 
 function run(cmd, args, timeout = 120000) {
   try {
-    return { ok: true, out: execFileSync(cmd, args, { encoding: "utf8", timeout, stdio: ["ignore", "pipe", "pipe"] }) };
+    const spec = cmd === "npx" ? npxSpec(args) : { cmd, args };
+    return { ok: true, out: execFileSync(spec.cmd, spec.args, { encoding: "utf8", timeout, stdio: ["ignore", "pipe", "pipe"], shell: Boolean(spec.shell) }) };
   } catch (e) {
     return { ok: false, out: `${e.stdout || ""}${e.stderr || ""}` };
   }

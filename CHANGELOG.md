@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.5 (2026-11-03, Windows support)
+
+- **doctor.mjs and lighthouse-gate.mjs**: `npx` is started through `lib/proc.mjs` (node runs npx-cli.js directly on Windows). Before, Windows reported "Lighthouse could not run" and a false "wrangler not logged in" on a working machine, and the Lighthouse gate could not start.
+- **optimize-images.mjs**: no longer macOS only. It uses cwebp and sips when both exist, otherwise the `sharp` package that `npm install` in `site/` already installs. `optimize()` is now async; `--engine native|sharp` forces one. Fails with a clear message when neither is available.
+- **astro-starter**: `npm run build:partial` (cross-env) replaces `PARTIAL=1 npm run build`, which does not work in PowerShell. site-design and site-images skills updated; setup-check has a Windows note.
+- Tests: npx helper, sharp engine (run with `SHARP_FROM=<folder with node_modules/sharp>`), missing-sharp message.
+
 ## 0.1.4 (2026-11-03, taste-skill v2)
 
 - **site-design**: a section that maps the 99-website overrides onto taste-skill v2 (no dials, scroll scenes off, dealt fonts and photographs ignored, no `assets.mjs`, inspect the production build).

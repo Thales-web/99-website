@@ -72,3 +72,6 @@ Finish with "Ready for business-intake" when `node` is OK (everything else is ne
 
 - No em dashes.
 - Report honestly. A check you could not run is MISSING or WARN, never OK.
+
+## Windows
+The scripts run on Windows (doctor, the Lighthouse gate and the image optimizer no longer need a Unix shell, `npx.cmd` quirks, `sips` or `cwebp`). The skills' example commands are written for bash, so in PowerShell translate them: set variables with `$env:NAME="value"` (or use the npm scripts, for example `npm run build:partial`), use `Get-Content` instead of `cat`, and quote paths. A Windows user folder with Hangul in its name works for Node and Chrome; if a path error appears, work from an ASCII path such as `C:\work\website`.
