@@ -56,3 +56,12 @@ These override the font rules above. Hangul is not in a Latin subset, so a Latin
 - Keep the `html:lang(ko)` rules in `global.css` (`word-break: keep-all`). They sit outside `@theme` on purpose.
 - Line length: 35 to 45 Hangul characters, not 45 to 75. The starter's `p { max-width: 68ch }` is about 37 characters; keep it. Line height 1.6 to 1.8.
 - One CTA label site-wide: the starter's `t.estimateCta` ("사진으로 견적 받기"). Do not add "무료" (free) unless the owner confirmed it.
+
+## taste-skill v2 (design-taste-frontend 2.x)
+Version 2 has no `DESIGN_VARIANCE`, `MOTION_INTENSITY` or `VISUAL_DENSITY` dials, and it deals directions, fonts, photographs and scroll scenes of its own. The overrides above map like this:
+- Motion (was `MOTION_INTENSITY: 2`): no scroll scenes. Do not run `scenes.mjs`, do not copy anything from `assets/scenes/`, and drop any dealt scene. Hover and focus states only.
+- Variance and density (were 4 and 4): from the directions `draw.mjs` deals, pick the calm, low-energy one and keep the starter's page order. If none of the three fits, redraw once.
+- Fonts: ignore the type system the draw deals. Use the fonts rule of this skill (the system Hangul stack on Korean sites, otherwise two self-hosted Latin WOFF2). No Google Fonts `<link>`, even if a v2 asset or example page carries one.
+- Images: never use the library's `picsum.photos` links and never run `assets.mjs` (it downloads stock and public-domain images). Images come from `business/photos/` or kie.ai only.
+- Checks: run `lint.mjs` on `site/src` and `inspect.mjs` on the production build (`site/dist` through `astro preview`). The inspector starts Chrome and a local server only.
+- Safety: the skills installer flagged this skill (Gen "Critical Risk", Snyk "Medium", Socket clean) because it drives a browser and runs with agent permissions. Read `scripts/` once before first use.

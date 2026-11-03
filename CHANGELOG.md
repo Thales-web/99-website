@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 (2026-11-03, taste-skill v2)
+
+- **site-design**: a section that maps the 99-website overrides onto taste-skill v2 (no dials, scroll scenes off, dealt fonts and photographs ignored, no `assets.mjs`, inspect the production build).
+
 ## 0.1.3 (2026-11-03, three consents)
 
 - **Estimate form (Korean law)**: three separate consent checkboxes: collection and use (required), providing to the installer (required, names the recipient), marketing text messages (optional). Each shows purpose, items, retention and the consequence of refusing. New fields: desired timing, home type is optional, area is required.
