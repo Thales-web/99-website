@@ -63,5 +63,7 @@ Version 2 has no `DESIGN_VARIANCE`, `MOTION_INTENSITY` or `VISUAL_DENSITY` dials
 - Variance and density (were 4 and 4): from the directions `draw.mjs` deals, pick the calm, low-energy one and keep the starter's page order. If none of the three fits, redraw once.
 - Fonts: ignore the type system the draw deals. Use the fonts rule of this skill (the system Hangul stack on Korean sites, otherwise two self-hosted Latin WOFF2). No Google Fonts `<link>`, even if a v2 asset or example page carries one.
 - Images: never use the library's `picsum.photos` links and never run `assets.mjs` (it downloads stock and public-domain images). Images come from `business/photos/` or kie.ai only.
+- Windows screenshots: Chrome headless `--screenshot` needs an absolute path (a relative `design/...` fails with error 0x3).
+- Preview port: before taking screenshots, `curl` the preview and check the H1 is this site's. Port 4321 may already serve another project's preview; astro then moves to 4322 or higher, and a screenshot of port 4321 shows the wrong site.
 - Checks: run `lint.mjs` on `site/src` and `inspect.mjs` on the production build (`site/dist` through `astro preview`). The inspector starts Chrome and a local server only.
 - Safety: the skills installer flagged this skill (Gen "Critical Risk", Snyk "Medium", Socket clean) because it drives a browser and runs with agent permissions. Read `scripts/` once before first use.

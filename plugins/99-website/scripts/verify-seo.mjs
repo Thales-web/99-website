@@ -60,8 +60,18 @@ export function consentFailures(site) {
   return f;
 }
 
+// The form function refuses a request without a Turnstile token, so an indexable build needs a real widget key.
+// Cloudflare's test keys (1x..., 2x..., 3x...) are for staging: one passes every check, the others block or force a challenge.
+export function turnstileFailures(site) {
+  if (site.noindex) return [];
+  const k = String(site.business?.turnstile_site_key || "");
+  if (!k) return ["site: turnstile_site_key is empty in client.md, so the estimate form cannot be submitted (create a Turnstile widget for the live domain)"];
+  if (/^[123]x0{8,}/i.test(k)) return ["site: turnstile_site_key is a Cloudflare test key; replace it with the key of a real Turnstile widget before an indexable build"];
+  return [];
+}
+
 export function verifySite({ dist, site }) {
-  const failures = [...consentFailures(site)];
+  const failures = [...consentFailures(site), ...turnstileFailures(site)];
   for (const page of site.pages) {
     const file = path.join(dist, page.file);
     if (!fs.existsSync(file)) { failures.push(`${page.url}: not built (${page.file})`); continue; }

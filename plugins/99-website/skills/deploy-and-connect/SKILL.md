@@ -26,7 +26,7 @@ Run from `sites/<slug>/site/` so wrangler finds `functions/` (the form handler) 
 ## Step 3: Form settings
 The form function reads its settings from Pages secrets. Values are typed by the owner, never written to a file or the chat log.
 - Until email is connected: `npx wrangler pages secret put LOG_ONLY --project-name <project>` with value `1`. Leads then appear in the Pages Function log only.
-- `TURNSTILE_SECRET` whenever `turnstile_site_key` is set in client.md (Cloudflare's test pair for demos: site key `1x00000000000000000000AA`, secret `1x0000000000000000000000000000000AA`).
+- `TURNSTILE_SECRET` whenever `turnstile_site_key` is set in client.md (Cloudflare's test pair for demos: site key `1x00000000000000000000AA`, secret `1x0000000000000000000000000000000AA`). The form function refuses a request without a Turnstile token, so a staging site needs at least the test pair to accept a test lead. `verify-seo.mjs` fails an indexable build that has no key or a test key, so a real widget key is required before launch.
 - Email (only when the owner says to connect it): `RESEND_API_KEY`, `LEAD_TO`, `LEAD_FROM` (an address on a domain verified in Resend), `PHONE`, and delete `LOG_ONLY`.
 - Secrets apply to the next deployment: redeploy (Step 2.3) after setting them.
 

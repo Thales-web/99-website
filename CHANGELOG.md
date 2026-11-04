@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.7 (2026-11-04, launch gates)
+
+- **verify-seo.mjs**: an indexable build now fails when `turnstile_site_key` is empty (the form cannot be submitted) or is a Cloudflare test key (it passes or blocks everything). Staging stays free to use the test pair.
+- **Skills**: site-design notes for Windows screenshot paths and for checking which site a preview port serves; deploy-and-connect explains why staging needs the Turnstile test pair.
+- Tests: turnstile gate.
+
 ## 0.1.6 (2026-11-03, skill frontmatter)
 
 - **seo-foundation**: the description held an unquoted `: ` ("production build: titles, ..."), which a strict YAML parser rejects, so the skill could fail to load in Claude Code. The description is now quoted. The bug was in the first release.
